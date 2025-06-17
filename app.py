@@ -88,8 +88,8 @@ def update_power(id):
     data = request.get_json()
     description = data.get("description")
 
-    if not description or len(description.strip()) < 10:
-        return jsonify({"errors": ["Description must be at least 10 characters"]}), 400
+    if not description or len(description.strip()) < 20:
+        return jsonify({"errors": ["Description must be at least 20 characters"]}), 400
 
     power.description = description.strip()
     db.session.commit()
