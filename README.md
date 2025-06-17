@@ -25,20 +25,21 @@ A RESTful API built with Flask and SQLAlchemy for managing heroes, powers, and t
 ├── models.py
 ├── seed.py
 ├── README.md
-└── migrations/
-
+├── requirements.txt
+├── migrations/
+└──pyrightconfig.json
 
 ## Setup Instructions
 
 ### 1. Clone the Repository
 
-git clone https://github.com/yourusername/superhero-api.git
-cd superhero-api
+git clone https://github.com/Emananii/Superheroes.git
+cd Superheroes
 
 ### 2. Create and Activate a Virtual Environment (Optional but Recommended)
 
 python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate(MacOs)
 
 ### 3. Install Dependencies
 
@@ -50,7 +51,7 @@ flask db migrate -m "Initial migration"
 flask db upgrade
 
 ### 5. Seed the Database
-python seed.py
+python3 -m seed
 
 ### 6. Run the Server
 python app.py
