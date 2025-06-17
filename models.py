@@ -20,10 +20,6 @@ class Hero(db.Model, SerializerMixin):
     serialize_rules = ('-hero_powers.hero',)  # Prevent recursion
     serialize_only = ('id', 'name', 'super_name')
 
-    def __init__(self, name: str, super_name: str):
-        self.name = name
-        self.super_name = super_name
-
     def __repr__(self):
         return f"<Hero {self.name}>"
 
@@ -44,10 +40,6 @@ class Power(db.Model, SerializerMixin):
     serialize_rules = ('-hero_powers.power',)
     serialize_only = ('id', 'name', 'description')
 
-    def __init__(self, name: str, description: str):
-        self.name = name
-        self.description = description
-
     @validates('description')
     def validate_description(self, key, value):
         if not value or len(value.strip()) < 20:
@@ -60,7 +52,9 @@ class Power(db.Model, SerializerMixin):
 
 class HeroPower(db.Model, SerializerMixin):
     __tablename__ = 'hero_powers'
+    __table_args__ = (db.UniqueConstraint('hero_id', 'power_id', name='unique_hero_power'),)
 
+    
     id = db.Column(db.Integer, primary_key=True)
     strength = db.Column(db.String(20), nullable=False)
 
@@ -72,16 +66,6 @@ class HeroPower(db.Model, SerializerMixin):
 
     serialize_rules = ('-hero.hero_powers', '-power.hero_powers')
     serialize_only = ('id', 'strength', 'hero_id', 'power_id')
-
-    def __init__(self, strength, hero=None, power=None, hero_id=None, power_id=None):
-        self.strength = strength
-        self.hero = hero
-        self.power = power
-        if hero_id:
-            self.hero_id = hero_id
-        if power_id:
-            self.power_id = power_id
-
 
     @validates('strength')
     def validate_strength(self, key, value):

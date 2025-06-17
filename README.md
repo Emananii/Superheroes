@@ -21,7 +21,6 @@ A RESTful API built with Flask and SQLAlchemy for managing heroes, powers, and t
 
 ## Project Structure
 
-.
 ├── app.py
 ├── models.py
 ├── seed.py
