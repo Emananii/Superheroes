@@ -1,8 +1,9 @@
 from random import choice as rc
-from app import app
+from app import create_app
 from models import db, Hero, Power, HeroPower
 
 if __name__ == '__main__':
+    app = create_app()
     with app.app_context():
         print("Clearing db...")
         HeroPower.query.delete()

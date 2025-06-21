@@ -4,6 +4,7 @@ from sqlalchemy_serializer import SerializerMixin
 
 db = SQLAlchemy()
 
+
 class Hero(db.Model, SerializerMixin):
     __tablename__ = 'heroes'
 
@@ -43,7 +44,8 @@ class Power(db.Model, SerializerMixin):
     @validates('description')
     def validate_description(self, key, value):
         if not value or len(value.strip()) < 20:
-            raise ValueError("Description must be at least 20 characters long.")
+            raise ValueError(
+                "Description must be at least 20 characters long.")
         return value
 
     def __repr__(self):
@@ -52,14 +54,15 @@ class Power(db.Model, SerializerMixin):
 
 class HeroPower(db.Model, SerializerMixin):
     __tablename__ = 'hero_powers'
-    __table_args__ = (db.UniqueConstraint('hero_id', 'power_id', name='unique_hero_power'),)
+    __table_args__ = (db.UniqueConstraint(
+        'hero_id', 'power_id', name='unique_hero_power'),)
 
-    
     id = db.Column(db.Integer, primary_key=True)
     strength = db.Column(db.String(20), nullable=False)
 
     hero_id = db.Column(db.Integer, db.ForeignKey('heroes.id'), nullable=False)
-    power_id = db.Column(db.Integer, db.ForeignKey('powers.id'), nullable=False)
+    power_id = db.Column(db.Integer, db.ForeignKey(
+        'powers.id'), nullable=False)
 
     hero = db.relationship('Hero', back_populates='hero_powers')
     power = db.relationship('Power', back_populates='hero_powers')
