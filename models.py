@@ -18,11 +18,26 @@ class Hero(db.Model, SerializerMixin):
         cascade='all, delete-orphan'
     )
 
-    serialize_rules = ('-hero_powers.hero',)  # Prevent recursion
+    serialize_rules = ('-hero_powers.hero',)
     serialize_only = ('id', 'name', 'super_name')
 
     def __repr__(self):
         return f"<Hero {self.name}>"
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "super_name": self.super_name,
+            "hero_powers": [hp.to_dict() for hp in self.hero_powers]
+        }
+
+    def to_dict_basic(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "super_name": self.super_name
+        }
 
 
 class Power(db.Model, SerializerMixin):
@@ -44,25 +59,33 @@ class Power(db.Model, SerializerMixin):
     @validates('description')
     def validate_description(self, key, value):
         if not value or len(value.strip()) < 20:
-            raise ValueError(
-                "Description must be at least 20 characters long.")
+            raise ValueError("Description must be at least 20 characters long.")
         return value
 
     def __repr__(self):
         return f"<Power {self.name}>"
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description
+            # Optional: include heroes using this power if needed
+            # "heroes": [hp.hero.to_dict_basic() for hp in self.hero_powers]
+        }
+
 
 class HeroPower(db.Model, SerializerMixin):
     __tablename__ = 'hero_powers'
-    __table_args__ = (db.UniqueConstraint(
-        'hero_id', 'power_id', name='unique_hero_power'),)
+    __table_args__ = (
+        db.UniqueConstraint('hero_id', 'power_id', name='unique_hero_power'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     strength = db.Column(db.String(20), nullable=False)
 
     hero_id = db.Column(db.Integer, db.ForeignKey('heroes.id'), nullable=False)
-    power_id = db.Column(db.Integer, db.ForeignKey(
-        'powers.id'), nullable=False)
+    power_id = db.Column(db.Integer, db.ForeignKey('powers.id'), nullable=False)
 
     hero = db.relationship('Hero', back_populates='hero_powers')
     power = db.relationship('Power', back_populates='hero_powers')
@@ -78,3 +101,13 @@ class HeroPower(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"<HeroPower Hero={self.hero_id} Power={self.power_id} Strength={self.strength}>"
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "strength": self.strength,
+            "hero_id": self.hero_id,
+            "power_id": self.power_id,
+            "hero": self.hero.to_dict_basic(),
+            "power": self.power.to_dict()
+        }
