@@ -41,35 +41,39 @@ Superheroes/
 ## Setup Instructions
 
 ### 1. Clone the Repository
-
+```
 git clone https://github.com/Emananii/Superheroes.git
 cd Superheroes
-
+```
 ### 2. (Optional) Create and Activate a Virtual Environment
 
+```
 python3 -m venv venv
-source venv/bin/activate  # Mac/Linux
+source venv/bin/activate (# Mac/Linux)
+```
 #### or
-venv\Scripts\activate     # Windows
+```
+venv\Scripts\activate (# Windows)
+```
 
 ### 3. Install Dependencies
-
+```
 pip install -r requirements.txt
-
+```
 ### 4. Run Database Migrations
-
+```
 flask db init
 flask db migrate -m "Initial migration"
 flask db upgrade
-
+```
 ### 5. Seed the Database
-
+```
 python3 -m seed
-
+```
 ### 6. Start the Development Server
-
+```
 python app.py
-
+```
 ## How to Use the API
 Once the server is running, access endpoints using a REST client like Postman, Insomnia, or simply via curl.
 
