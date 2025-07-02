@@ -89,14 +89,15 @@ Update a power's description
 #### POST /hero_powers
 Assign a power to a hero with a specified strength
 Body Example:
-
+```
 {
   "hero_id": 1,
   "power_id": 3,
   "strength": "Average"
 }
+```
 Example Hero Response
-
+```
 {
   "id": 1,
   "name": "Storm",
@@ -110,8 +111,8 @@ Example Hero Response
     }
   ]
 }
-
-## 🚫 Known Limitations
+```
+## Known Limitations
 
 No authentication or rate limiting
 
@@ -130,13 +131,15 @@ Add user roles for admins/editors
  
 Integrate with a frontend (React, Vue, etc.)
 
-##📬 Contact
+## 📬 Contact
 For support, questions, or suggestions:
-
+```
 Emmanuel Wambugu Ndiritu
 📧 emmanuelwambugu5@gmail.com
 🔧 GitHub: @Emananii
+```
 
-📄 License
+## 📄 License
+
 This project is licensed under the MIT License.
 
