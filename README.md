@@ -28,7 +28,7 @@ SQLAlchemy Serializer Mixin — object serialization
 SQLite — development database
 
 ## Project Structure
-
+```
 Superheroes/
 ├── app.py                 # Main app entry point
 ├── models.py              # SQLAlchemy models
@@ -37,7 +37,7 @@ Superheroes/
 ├── requirements.txt       # Python dependencies
 ├── pyrightconfig.json     # Optional type checking config
 └── migrations/            # Auto-generated migration files
-
+```
 ## Setup Instructions
 
 ### 1. Clone the Repository
@@ -49,7 +49,7 @@ cd Superheroes
 
 python3 -m venv venv
 source venv/bin/activate  # Mac/Linux
-# or
+#### or
 venv\Scripts\activate     # Windows
 
 ### 3. Install Dependencies
